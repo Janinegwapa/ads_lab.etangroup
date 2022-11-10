@@ -36,7 +36,9 @@
 								<a href="#" style="float:right;font-size:12px;">Forgot password?</a>
 								<input type="password" name="password" class="form-control form-control-sm" id="exampleInputPassword1">
 							</div>
-							<button type="submit" class="btn btn-primary btn-block">Sign in</button>
+							<button type="submit" div class="container mt-5">
+		<div class="col-md-10 m-auto">
+			<a href="list.php" class="btn btn-primary">Sign In</a></button>
 							<br>
 							<div class="sign-up">
 								Don't have an account? <a href="registration.php">Create One</a>
