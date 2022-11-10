@@ -21,8 +21,8 @@
 				<div class="card-body">
 					<h3 class="card-title text-center">Log in</h3>
 					<div class="card-text">
-						<!--
-					<div class="alert alert-danger alert-dismissible fade show" role="alert">Incorrect username or password.</div> -->
+						
+					<!-- <div class="alert alert-danger alert-dismissible fade show" role="alert">Incorrect username or password.</div>  -->
 						<form method="POST">
 							<!-- to error: add class "has-danger" -->
 							<div class="form-group">
@@ -36,12 +36,12 @@
 								<a href="#" style="float:right;font-size:12px;">Forgot password?</a>
 								<input type="password" name="password" class="form-control form-control-sm" id="exampleInputPassword1">
 							</div>
-							<button type="submit" div class="container mt-5">
-		<div class="col-md-10 m-auto">
-			<a href="list.php" class="btn btn-primary">Sign In</a></button>
+							
+								<button type="submit" class="btn btn-primary btn-block">Sign In</button>
+								
 							<br>
 							<div class="sign-up">
-								Don't have an account? <a href="registration.php">Create One</a>
+							Don't have an account?<a href="registration.php">Create One</a>
 							</div>
 						</form>
 					</div>
@@ -55,10 +55,28 @@
 <?php
 	require ('connection/database.php');
 
-	if (isset($_POST['username'])) {
-		$user = $_POST['username'];
-		$pass = hash('md5', $_POST['password']);
+	if ($_SERVER["REQUEST_METHOD"] == "POST") {
+		$username = trim($_POST["username"]);
+		$password = hash("md5", trim($_POST["password"]));
 
-		$sql = "SELECT * FROM users WHERE username='$user' AND password='$pass'";
+		$sql = "SELECT * FROM `users` WHERE `username`='$username' AND `password`='$password'";
+		 $result = mysqli_query($conn, $sql);
+
+		if (mysqli_num_rows($result) === 1) {
+
+			$row = mysqli_fetch_assoc($result);
+
+			if ($row['username'] === $username && $row['password'] === $password) {
+				echo "<script>alert('successfully login!')</script>";
+				header("location: ../list.php");
+			}
+		}else{
+				echo "<script>alert('invalid username and password!')</script>";
+		}
+		// if ($row) {
+		//		//header("location: ../list.php");
+		// } else {
+		//	  echo "Something went wrong. Please try again later.";
+		// }
 	}
 ?>
